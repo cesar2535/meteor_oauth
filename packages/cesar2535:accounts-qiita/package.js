@@ -1,8 +1,8 @@
 Package.describe({
   name: 'cesar2535:accounts-qiita',
-  summary: ' /* Fill me in! */ ',
+  summary: 'Login service for Qiita accounts',
   version: '1.0.0',
-  git: ' /* Fill me in! */ '
+  git: 'https://github.com/cesar2535/meteor-accounts-qiita.git'
 });
 
 Package.on_use(function(api) {

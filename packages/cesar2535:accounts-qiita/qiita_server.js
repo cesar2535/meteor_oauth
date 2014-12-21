@@ -11,11 +11,10 @@ OAuth.registerService('qiita', 2, null, function(query) {
     },
     options: {
       profile: {
-        name: identity.user,
-        url: identity.url,
-        team: identity.team,
-        user_id: identity.user_id,
-        team_id: identity.team_id
+        name: identity.name,
+        user_id: identity.id,
+        profile_image_url: identity.profile_image_url,
+        website_url: identity.website_url
       }
     }
   };
@@ -38,7 +37,7 @@ var getAccessToken = function(query) {
         params: {
           code: query.code,
           client_id: config.clientId,
-          client_secret: OAuth.openSecret(config.secret),
+          client_secret: OAuth.openSecret(config.secret)
           // redirect_uri: Meteor.absoluteUrl("_oauth/slack?close")
           // redirect_uri: OAuth._redirectUri('qiita', config),
           // state: query.state
