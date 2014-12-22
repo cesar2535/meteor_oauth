@@ -6,7 +6,7 @@ OAuth.registerService('qiita', 2, null, function(query) {
 
   return {
     serviceData: {
-      id: identity.user_id,
+      id: identity.id,
       accessToken: accessToken
     },
     options: {
@@ -45,14 +45,19 @@ var getAccessToken = function(query) {
           'User-Agent': userAgent,
           'Content-Type': 'application/json'
         },
-        params: {
+        data: {
           code: query.code,
           client_id: config.clientId,
           client_secret: config.secret
-          // redirect_uri: Meteor.absoluteUrl("_oauth/slack?close")
-          // redirect_uri: OAuth._redirectUri('qiita', config),
-          // state: query.state
         }
+        // params: {
+        //   code: query.code,
+        //   client_id: config.clientId,
+        //   client_secret: config.secret
+        //   // redirect_uri: Meteor.absoluteUrl("_oauth/slack?close")
+        //   // redirect_uri: OAuth._redirectUri('qiita', config),
+        //   // state: query.state
+        // }
       });
   } catch (err) {
     throw _.extend(new Error("Failed to complete OAuth handshake with Qiita. " + err.message), {
@@ -60,10 +65,10 @@ var getAccessToken = function(query) {
     });
   }
 
-  if (!response.data.ok) { // if the http response was a json object with an error attribute
+  if (!response.data) { // if the http response was a json object with an error attribute
     throw new Error("Failed to complete OAuth handshake with Qiita. " + response.data.error);
   } else {
-    return response.data.access_token;
+    return response.data.token;
   }
 };
 
@@ -71,12 +76,12 @@ var getIdentity = function(accessToken) {
   try {
     var response = HTTP.get(
       "https://qiita.com/api/v2/authenticated_user", {
-        params: {
-          token: accessToken
+        headers: {
+          Authorization: 'Bearer ' + accessToken
         }
       });
 
-    return response.data.ok && response.data;
+    return response.data;
   } catch (err) {
     throw _.extend(new Error("Failed to fetch identity from Qiita. " + err.message), {
       response: err.response

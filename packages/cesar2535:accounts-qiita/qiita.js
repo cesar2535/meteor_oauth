@@ -7,7 +7,7 @@ if (Meteor.isClient) {
       callback = options;
       options = null;
     }
-
+    options.requestPermissions = ['read_qiita'];
     var credentialRequestCompleteCallback = Accounts.oauth.credentialRequestCompleteHandler(callback);
     Qiita.requestCredential(options, credentialRequestCompleteCallback);
   };
