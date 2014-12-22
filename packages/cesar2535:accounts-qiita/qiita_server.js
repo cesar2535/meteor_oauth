@@ -20,6 +20,11 @@ OAuth.registerService('qiita', 2, null, function(query) {
   };
 });
 
+var userAgent = 'Meteor';
+if (Meteor.release)
+  userAgent += '/' + Meteor.release;
+
+
 var getAccessToken = function(query) {
   var config = ServiceConfiguration.configurations.findOne({
     service: 'qiita'
@@ -27,17 +32,23 @@ var getAccessToken = function(query) {
   if (!config)
     throw new ServiceConfiguration.ConfigError();
 
+  check(query.code, String);
+  check(config.clientId, String);
+  check(config.secret, String);
+
   var response;
   try {
     response = HTTP.post(
       "https://qiita.com/api/v2/access_tokens", {
-        // headers: {
-        //   Accept: 'application/json'
-        // },
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': userAgent,
+          'Content-Type': 'application/json'
+        },
         params: {
           code: query.code,
           client_id: config.clientId,
-          client_secret: OAuth.openSecret(config.secret)
+          client_secret: config.secret
           // redirect_uri: Meteor.absoluteUrl("_oauth/slack?close")
           // redirect_uri: OAuth._redirectUri('qiita', config),
           // state: query.state
