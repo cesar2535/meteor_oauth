@@ -1,6 +1,6 @@
 Qiita = {};
 
-// Request Slack credentials for the user
+// Request Qiita credentials for the user
 // @param options {optional}
 // @param credentialRequestCompleteCallback {Function} Callback function to call on
 //   completion. Takes one argument, credentialToken on success, or Error on
@@ -21,7 +21,7 @@ Qiita.requestCredential = function(options, credentialRequestCompleteCallback) {
     return;
   }
 
-  // For some reason, slack converts underscores to spaces in the state
+  // For some reason, qiita converts underscores to spaces in the state
   // parameter when redirecting back to the client, so we use
   // `Random.id()` here (alphanumerics) instead of `Random.secret()`
   // (base 64 characters).
@@ -39,7 +39,7 @@ Qiita.requestCredential = function(options, credentialRequestCompleteCallback) {
     // '&redirect_uri=' + OAuth._redirectUri('qiita', config) +
     '&state=' + OAuth._stateParam(loginStyle, credentialToken);
 
-  // slack box gets taller when permissions requested.
+  // qiita box gets taller when permissions requested.
   var height = 620;
   if (_.without(scope, 'basic').length)
     height += 130;

@@ -15,7 +15,7 @@ if (Meteor.isClient) {
   Accounts.addAutopublishFields({
     // publish all fields including access token, which can legitimately
     // be used from the client (if transmitted over ssl or on
-    // localhost). http://www.meetup.com/meetup_api/auth/#oauth2implicit
+    // localhost). https://qiita.com/api/v2/docs
     forLoggedInUser: ['services.qiita'],
     forOtherUsers: ['services.qiita.id']
   });

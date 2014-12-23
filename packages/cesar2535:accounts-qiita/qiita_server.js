@@ -50,14 +50,6 @@ var getAccessToken = function(query) {
           client_id: config.clientId,
           client_secret: config.secret
         }
-        // params: {
-        //   code: query.code,
-        //   client_id: config.clientId,
-        //   client_secret: config.secret
-        //   // redirect_uri: Meteor.absoluteUrl("_oauth/slack?close")
-        //   // redirect_uri: OAuth._redirectUri('qiita', config),
-        //   // state: query.state
-        // }
       });
   } catch (err) {
     throw _.extend(new Error("Failed to complete OAuth handshake with Qiita. " + err.message), {
