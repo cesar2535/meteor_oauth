@@ -11,4 +11,7 @@ template(name='header')
       #navigation.navbar-collapse.collapse
         ul.nav.navbar-nav
         ul.nav.navbar-nav.navbar-right
+          if currentUser
+            li.username
+              a #{username}
           +loginButtons
